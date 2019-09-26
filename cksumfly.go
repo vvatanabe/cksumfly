@@ -32,10 +32,14 @@ func (c *Cksumfly) Run() error {
 	if err != nil {
 		return err
 	}
+	_, _ = fmt.Fprintln(c.OutStream, Checksum(bytes))
+	return nil
+}
+
+func Checksum(bytes []byte) int32 {
 	trimmed := trimLineBreak(string(bytes))
 	crc := crc32.ChecksumIEEE([]byte(trimmed))
-	_, _ = fmt.Fprintln(c.OutStream, int32(crc))
-	return nil
+	return int32(crc)
 }
 
 func trimLineBreak(str string) string {
